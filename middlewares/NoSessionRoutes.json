@@ -1,0 +1,12 @@
+{
+    "GET": {
+    	"/v1/posts/post":{
+    	  "event_type": "GET_POST"
+    	}
+      },
+    "POST": {
+        "/biz-app/user/v1/validate-otp":{
+            "event_type": "VALIDATE_OTP"    
+        }
+    }
+}

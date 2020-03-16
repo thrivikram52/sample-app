@@ -1,0 +1,3 @@
+Sample Url for testing
+
+curl  'localhost:28096/v1/posts/post?post_id=123' --header 'api-key: 44f9bfb6-47e0-47bf-b5f7-6771de71ff3f'  --header 'Content-Type: application/json'

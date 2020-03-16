@@ -1,0 +1,35 @@
+{
+    "GET": {
+    	
+	    "/biz-app/image/v1/pre-signed-url-write":{
+			"event_type": "GET_PRE_SIGNED_URL_WRITE",
+			"user_type":["user"]
+		},
+
+	    "/biz-app/user/v1/user-details":{
+			"event_type": "GET_USER_DETAILS",
+			"user_type":["user"]
+		}
+
+    },
+    "POST":{
+    },
+    "PUT": {
+		"/biz-app/user/v1/user-details":{
+			"event_type": "UPDATE_USER_DETAILS",
+			"user_type":["user"]
+ 	    },
+		"/biz-app/user/v1/profile-pic":{
+			"event_type": "UPDATE_PROFILE_PIC",
+			"user_type":["user"]
+ 	    },
+		"/biz-app/user/v1/address-proof":{
+			"event_type": "UPDATE_ADDRESS_PROOF",
+			"user_type":["user"]
+ 	    },
+		"/biz-app/user/v1/aadhaar":{
+			"event_type": "UPDATE_AADHAAR",
+			"user_type":["user"]
+ 	    } 	    
+	}
+}

@@ -1,0 +1,9 @@
+{
+    "GET":{    	
+    	"/v1/health/health-check":{
+    	  "event_type": "GET_HEALTH"
+    	}
+    },
+    "POST": {
+    }
+}

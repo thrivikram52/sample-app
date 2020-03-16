@@ -1,0 +1,9 @@
+{
+    "GET":{
+      "/user/v1login":{
+        "event_type": "LOGIN"
+      }
+    },
+    "POST": {
+    }
+}

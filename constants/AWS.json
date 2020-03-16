@@ -1,0 +1,8 @@
+{
+	"s3":{
+		"bucket_name":"zippr-media",
+		"expire_sec":1800,
+		"secretAccessKey":"",
+		"accessKeyId":""
+	}	
+}
