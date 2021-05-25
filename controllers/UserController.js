@@ -53,10 +53,11 @@ export const send_otp = async (req, res, next) => {
               'recipient': mobile_no,
               'otp': otpObj.token
             };
-            let smsContent = "%d is your zippr OTP. Please do not share this with anyone - zippr Team."
+            let smsContent = "Your OTP is %d for activating the  . Please do not share this with anyone - Zippr."
+            //let smsContent = "%d is your zippr OTP. Please do not share this with anyone - zippr Team."
             smsContent = smsContent.replace("%d",otpObj.token);
             let smsObj = {
-                "From":"zipprIO",
+                "From":"ZIPPRD",
                 "To":mobile_no,
                 "Body":smsContent
             }
@@ -95,7 +96,8 @@ export const validate_otp = async (req, res, next) => {
             const client_id = clientObj._id;
             let userObj = {
                 "mobile_no":mobile_no,
-                "client_id":client_id
+                "client_id":client_id,
+                "user_type":"user"                
             }
             req = Auth.create_session_obj(req,userObj);
             userObj.session = req.session;

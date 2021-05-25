@@ -17,3 +17,20 @@ export const GET_POST_BODY = {
     "properties": {
     }
 }
+
+export const CREATE_POST_BODY = {
+    "$schema": "https://json-schema.org/draft-04/schema#",
+    "title": "CREATE_POST_BODY",
+    "type": "object",
+    "properties": {
+        "post": {
+            "type":"string",
+            "required":true
+        },
+        "tag": {
+            "type":"string",
+            "required":true
+        }        
+    }
+}
+

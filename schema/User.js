@@ -11,7 +11,7 @@ export const LOGIN_BODY = {
     "title": "LOGIN_BODY",
     "type": "object",
     "properties": {
-        "username": {
+        "mobile_no": {
             "type":"string",
             "required":true
         },

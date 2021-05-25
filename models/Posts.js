@@ -11,6 +11,9 @@ let PostsSchema = new Schema({
     post_id:{
         type: String
     },
+    tag:{
+        type: String
+    },
     createdBy: {
         type: String
     },

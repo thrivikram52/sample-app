@@ -1,6 +1,6 @@
 {
     "GET":{
-      "/user/v1login":{
+      "/v1/user/login":{
         "event_type": "LOGIN"
       }
     },

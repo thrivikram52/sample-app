@@ -125,7 +125,7 @@ const get_route_obj = (originalUrl, httpMethod) =>{
             if (routeMap[httpMethod][normalizedURL]){
                 routeObj = routeMap[httpMethod][normalizedURL];
                 isRouteObjFound = true;
-            } else if(routeMap[httpMethod][baseURL + '/:param'] && i != normalizedURL.length - 1) {
+            } else if(routeMap[httpMethod][baseURL + '/:param'] && index != normalizedURL.length - 1) {
                 routeObj = routeMap[httpMethod][baseURL + '/:param'];
                 isRouteObjFound = true;
             }
@@ -185,7 +185,6 @@ const check_autorization = (req) => {
     let isAuthorizedToAccessRoute = false;
     let session = get_session_obj(req);
     let userType = session.user_type;
-    //userType = "truck_owner";//TODO remove
     let routeAutorizedUserTypes = req.routeObj.user_type || [];
     if(routeAutorizedUserTypes && routeAutorizedUserTypes.indexOf(userType)>-1) {
         isAuthorizedToAccessRoute = true

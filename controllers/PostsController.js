@@ -2,6 +2,8 @@ import * as ErrorUtils from '../commons/utils/ErrorUtils';
 import * as AbstractModels from '../models/AbstractModels';
 import Posts from '../models/Posts';
 import * as PostsService from '../services/PostsService';
+import * as Auth from '../middlewares/Auth';
+
 
 export const get_posts = async(req,res,next) => {
 	try{
@@ -22,7 +24,29 @@ export const get_posts = async(req,res,next) => {
         next();
 	}
 	catch(err) {
-		console.log('Error in get student : ',err);
+		console.log('Error in get post : ',err);
+		next(ErrorUtils.InternalServerError(err));
+	}
+}
+
+export const create_posts = async(req,res,next) => {
+	try{
+        const post = req.body.post;
+        const tag = req.body.tag;
+        const sessionObj = await Auth.get_session_obj(req);
+        const mobile_no = sessionObj.mobile_no;
+        let doc = {
+            "post":post,
+            "tag":tag,
+            "createdBy" :mobile_no
+        }
+        await AbstractModels.mongoInsert(Posts,doc);
+        res.data = {  
+        };
+        next();
+	}
+	catch(err) {
+		console.log('Error in create_posts : ',err);
 		next(ErrorUtils.InternalServerError(err));
 	}
 }

@@ -19,8 +19,8 @@ app.use('*',[RequestLogger.reqLog,Auth.checks,SchemaValidator.validate]);
 app.use('/v1/health', health);
 app.use('/v1/posts', posts);
 
-app.use('/biz-app/user/v1', user);
-app.use('/biz-app/image/v1', image);
+app.use('/v1/user', user);
+app.use('/v1/image/', image);
 
 app.use('*',[ResponseLogger.resSuccessLog,ResponseLogger.resErrorLog]);
 

@@ -17,7 +17,7 @@ export const validate = (req,res,next) => {
     let query = req.query;
     let body = req.body;
     let routeObj = req.routeObj;
-    let schema = routeObj.schema;
+    //let schema = routeObj.schema;
 
     var isValidReqQuery = jsValidator.validate(query,Schema[routeObj.event_type+"_QUERY"]);
     var isValidReqBody = jsValidator.validate(body,Schema[routeObj.event_type+"_BODY"]);
