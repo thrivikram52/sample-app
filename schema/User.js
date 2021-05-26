@@ -146,3 +146,27 @@ export const UPDATE_AADHAAR_BODY = {
         }
     }
 }
+
+export const REGISTER_BODY = {
+    "$schema": "https://json-schema.org/draft-04/schema#",
+    "title": "REGISTER_BODY",
+    "type": "object",
+    "properties": {
+        "mobile_no": {
+            "type":"string",
+            "required":true
+        },
+        "password": {
+            "type":"string",
+            "required":true
+        },
+        "first_name": {
+            "type":"string",
+            "required":true
+        },
+        "last_name": {
+            "type":"string",
+            "required":true
+        }
+    }
+}

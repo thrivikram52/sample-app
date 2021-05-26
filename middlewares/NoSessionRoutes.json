@@ -10,6 +10,6 @@
     "POST": {
         "/v1/user/validate-otp":{
             "event_type": "VALIDATE_OTP"    
-        }
+        }   
     }
 }

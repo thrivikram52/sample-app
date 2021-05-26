@@ -181,7 +181,7 @@ const check_api_key_validity = async(req,next) => {
     }
 }
 
-const check_autorization = (req) => {
+const check_autorization =  (req) => {
     let isAuthorizedToAccessRoute = false;
     let session = get_session_obj(req);
     let userType = session.user_type;

@@ -5,29 +5,86 @@ import Client from '../models/Client';
 import * as Auth from '../middlewares/Auth';
 import * as OTPGeneratorService from '../services/OTPGeneratorService';
 import * as SmsService from '../services/SmsService';
+import * as EncryptionService from '../services/EncryptionService';
+
+export const register = async(req,res,next) => {
+	try{
+        const mobile_no = req.body.mobile_no;
+        const password = req.body.password;
+        const first_name = req.body.first_name;
+        const last_name = req.body.last_name;
+
+        let selectCondition = {
+        	"mobile_no":mobile_no
+        }
+        let userObj = await AbstractModels.mongoFindOne(User,selectCondition);
+        if(userObj) {
+            next(ErrorUtils.DataAlreadyExists());
+        } else {
+            selectCondition = {
+                "api_key": req.header('api-key')
+            }
+            const clientObj = await AbstractModels.mongoFindOne(Client,selectCondition);
+            const client_id = clientObj._id;
+            let bcryptedPassword = await EncryptionService.generateBcryptPassword(password);
+            userObj = {
+                "mobile_no":mobile_no,
+                "first_name":first_name,
+                "last_name":last_name,
+                "password" :bcryptedPassword,
+                "client_id":client_id,
+                "user_type":"user"                
+            }
+            await AbstractModels.mongoInsert(User,userObj);
+            delete userObj.password;
+            req = Auth.create_session_obj(req,userObj);
+            res.data = {
+                "user_details":userObj,
+                "sessiontoken":req.session
+            };
+            next();    
+        }
+	}
+	catch(err) {
+		console.log('Error in registration : ',err);
+		next(ErrorUtils.InternalServerError(err));
+	}
+}
 
 export const login = async(req,res,next) => {
 	try{
         const mobile_no = req.body.mobile_no;
         const password = req.body.password;
         let selectCondition = {
-        	"mobile_no":mobile_no,
-        	"password":password
+        	"mobile_no":mobile_no
         }
         let projectCondition = {
             "_id":0,
         	"first_name":1,
             "last_name":1,
-            "mobile_no":1
+            "mobile_no":1,
+            "password":1,
+            "client_id":1
         }
         let userObj = await AbstractModels.mongoFindOne(User,selectCondition,projectCondition);
-
-        req = Auth.create_session_obj(req,userObj);
-        res.data = {
-        	"user_details":userObj,
-            "sessiontoken":req.session
-        };
-        next();
+        if(!userObj) {
+            next(ErrorUtils.UserNotFoundError(""));
+        } else {
+            let bcryptedPassword = userObj.password;
+            let isValid = EncryptionService.compareBcryptPassword(password,bcryptedPassword);
+            if(!isValid) {
+                next(ErrorUtils.InvalidPasswordError(""));
+            } else {
+                delete userObj.password;
+                userObj.user_type = "user";
+                req = Auth.create_session_obj(req,userObj);
+                res.data = {
+                    "user_details":userObj,
+                    "sessiontoken":req.session
+                };
+                next();        
+            }
+        }
 	}
 	catch(err) {
 		console.log('Error in login : ',err);
@@ -84,8 +141,15 @@ export const validate_otp = async (req, res, next) => {
         let selectCondition = {
             "mobile_no":mobile_no
         }
-        let isRegisteredPartner = await AbstractModels.mongoFindOne(User,selectCondition);
-        if(!isRegisteredPartner) {
+        let projectCondition = {
+            "_id":0,
+            "first_name":1,
+            "last_name":1,
+            "mobile_no":1,
+            "client_id":1
+        };
+        let userObj = await AbstractModels.mongoFindOne(User,selectCondition,projectCondition);
+        if(!userObj) {
             console.log("Not registered user");
             next(ErrorUtils.NotRegisteredUser());
         } else if(response){
@@ -94,13 +158,8 @@ export const validate_otp = async (req, res, next) => {
             }
             const clientObj = await AbstractModels.mongoFindOne(Client,selectCondition);
             const client_id = clientObj._id;
-            let userObj = {
-                "mobile_no":mobile_no,
-                "client_id":client_id,
-                "user_type":"user"                
-            }
+            userObj.user_type = "user";
             req = Auth.create_session_obj(req,userObj);
-            userObj.session = req.session;
 
             selectCondition = {
                 "mobile_no":mobile_no,
@@ -114,7 +173,10 @@ export const validate_otp = async (req, res, next) => {
                 } 
             }
             await AbstractModels.mongoUpsertOne(User,selectCondition,updateCondition);
-            res.data = {'sessiontoken' : req.session};
+            res.data = {
+                "user_details":userObj,
+                'sessiontoken' : req.session
+            };
             next();
         } else {
             console.log("error occured");

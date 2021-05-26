@@ -17,12 +17,14 @@ let PostsSchema = new Schema({
     createdBy: {
         type: String
     },
-    createdAt: {
-        type: String
+    created_at: {
+        type: Date,
+        default: Date.now
     },
-    updatedAt: {
-        type: String
-    } 
+    updated_at: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 

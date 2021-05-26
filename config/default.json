@@ -10,7 +10,7 @@
         "dbuser": "",
         "conn_string": "mongodb://localhost:27017/main"
     },
-    "analyticsDbConfig": {
+    "analyticsDbConfig": {  
         "dbname": "analytics",
         "host": "localhost",
         "is_replica_set": false,
