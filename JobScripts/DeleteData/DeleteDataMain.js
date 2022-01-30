@@ -1,9 +1,9 @@
 require("babel-core/register");
 require("babel-polyfill");
-var DeleteData = require('./DeleteData')
+const deleteUsers = require("./DeleteData");
 
-module.export = {
-	"delete_posts":DeleteData.posts
+function main() {
+  return deleteUsers();
 }
 
-return DeleteData.delete_posts();
+main();

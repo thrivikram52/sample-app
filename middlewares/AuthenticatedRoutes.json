@@ -1,39 +1,15 @@
 {
-    "GET": {
-    	
-	    "/v1/image/pre-signed-url-write":{
-			"event_type": "GET_PRE_SIGNED_URL_WRITE",
-			"user_type":["user"]
-		},
-
-	    "/v1/user/user-details":{
-			"event_type": "GET_USER_DETAILS",
-			"user_type":["user"]
-		}
-
-    },
-    "POST":{
-		"/v1/posts/create-post":{
-			"event_type": "CREATE_POST",
-			"user_type":["user"]
-		}
-    },
-    "PUT": {
-		"/v1/user/user-details":{
-			"event_type": "UPDATE_USER_DETAILS",
-			"user_type":["user"]
- 	    },
-		"/v1/user/profile-pic":{
-			"event_type": "UPDATE_PROFILE_PIC",
-			"user_type":["user"]
- 	    },
-		"/v1/user/address-proof":{
-			"event_type": "UPDATE_ADDRESS_PROOF",
-			"user_type":["user"]
- 	    },
-		"/v1/user/aadhaar":{
-			"event_type": "UPDATE_AADHAAR",
-			"user_type":["user"]
- 	    } 	    
-	}
+  "GET": {
+    "/v1/user/user-details": {
+      "eventType": "GET_USER_DETAILS",
+      "userType": ["user"]
+    }
+  },
+  "POST": {},
+  "PUT": {
+    "/v1/user/user-details": {
+      "eventType": "UPDATE_USER_DETAILS",
+      "userType": ["user"]
+    }
+  }
 }

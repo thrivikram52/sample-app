@@ -1,15 +1,4 @@
 {
-    "GET": {
-    	"/v1/posts/post":{  
-    	  "event_type": "GET_POST"
-    	},
-      "/v1/user/send-otp":{
-        "event_type": "SEND_OTP"
-      }
-      },
-    "POST": {
-        "/v1/user/validate-otp":{
-            "event_type": "VALIDATE_OTP"    
-        }   
-    }
+  "GET": {},
+  "POST": {}
 }

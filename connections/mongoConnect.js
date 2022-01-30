@@ -1,17 +1,19 @@
-import config from '../config/index.js';
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
+import config from "../config/index";
 
-export const mainDb =  mongoose.createConnection(config.dbconfig.conn_string);
-if(mainDb){
-	console.log("Config ",config.dbconfig.conn_string)
+export const mainDb = mongoose.createConnection(config.dbconfig.connString);
+// .catch((error) => console.log('Mongo connection error', error));
+if (mainDb) {
+  console.log("Config ", config.dbconfig.connString);
+} else {
+  console.log("Unable to connect to mainDb");
 }
-else{
-	console.log("Unable to connect to mainDb")
-}
-export const analyticsDb =  mongoose.createConnection(config.analyticsDbConfig.conn_string);
-if(analyticsDb){
-	console.log("Config ",config.analyticsDbConfig.conn_string)
-}
-else{
-	console.log("Unable to connect analyticsDb")
+export const analyticsDb = mongoose.createConnection(
+  config.analyticsDbConfig.connString
+);
+// .catch((error) => console.log('Mongo connection error', error));
+if (analyticsDb) {
+  console.log("Config ", config.analyticsDbConfig.connString);
+} else {
+  console.log("Unable to connect analyticsDb");
 }

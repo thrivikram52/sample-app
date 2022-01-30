@@ -1,11 +1,11 @@
-import * as _ from 'underscore';
+/* eslint-disable import/no-import-module-exports */
+import * as AbstractModels from "../../models/AbstractModels";
+import User from "../../models/User";
 
-import * as AbstractModels from '../../models/AbstractModels';
-import Posts from '../../models/Posts';
+const deleteUsers = async () => {
+  const findCondition = {};
+  await AbstractModels.mongoDelete(User, findCondition);
+  console.log("users deleted executed");
+};
 
-export const delete_posts = async() => {
-	let selectCondition = {
-	}
-	await AbstractModels.mongoDelete(Posts, selectCondition);
-	console.log("posts deleted executed");
-}
+module.exports = deleteUsers;

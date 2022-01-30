@@ -1,32 +1,31 @@
-import mongoose from 'mongoose';
-import {Schema} from 'mongoose';
+import { Schema } from "mongoose";
 
-import * as mongoConnect from '../connections/mongoConnect';
-var mainDb = mongoConnect.mainDb;
+import * as mongoConnect from "../connections/mongoConnect";
 
-let PostsSchema = new Schema({
-    post: {
-        type: String
-    },
-    post_id:{
-        type: String
-    },
-    tag:{
-        type: String
-    },
-    createdBy: {
-        type: String
-    },
-    created_at: {
-        type: Date,
-        default: Date.now
-    },
-    updated_at: {
-        type: Date,
-        default: Date.now
-    }
+const { mainDb } = mongoConnect;
+
+const PostsSchema = new Schema({
+  post: {
+    type: String,
+  },
+  postId: {
+    type: String,
+  },
+  tag: {
+    type: String,
+  },
+  createdBy: {
+    type: String,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
-
-let Posts = mainDb.model('Posts', PostsSchema, 'Posts');
+const Posts = mainDb.model("Posts", PostsSchema, "Posts");
 export default Posts;

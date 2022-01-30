@@ -27,3 +27,26 @@ User collection sample doc
 Sample Url for testing
 
 curl  'localhost:28096/v1/posts/post?post_id=123' --header 'api-key: 44f9bfb6-47e0-47bf-b5f7-6771de71ff3f'  --header 'Content-Type: application/json'
+
+
+Node version: 16
+used VS plugins: eslint
+
+
+TODO:
+
+1. mongo null values saving
+2. avoid cascading validation
+3. Mongo connection error
+4. function_ names not shown as Errors
+
+4. Events handling
+6. Integration testing
+
+3. Unit test support, app.listen after connecting to mongod server
+5. Rate limter
+7. Unit testing
+
+8. Husky
+10. Sentry
+11. Sonar cube

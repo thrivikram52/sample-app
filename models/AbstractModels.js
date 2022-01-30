@@ -1,271 +1,134 @@
-export const mongoFindWithSort = async(col,selectCondition,projectCondition,sortCondition,limit) =>{
-    return new Promise(async(resolve,reject) => { 
-    	try{
-    		if(!projectCondition) {
-    		    projectCondition = {};
-    		}
-    		if(!sortCondition) {
-    		    sortCondition = {
-    		        "_id":1
-    		    };            
-    		}
-    		var limitValue = 0;
-    		if(limit) {
-    		    limitValue = limit;
-    		}
-    		col.find(selectCondition).select(projectCondition).sort(sortCondition).limit(limitValue).lean().exec(function(err,res){
-    		    if(err){                    
-                    reject(new Error(err));
-                }
-                else{
-                    resolve(res);    
-                }
-    		})
-    	}catch(err) {
-    		reject(new Error(err));;
-    	}
-    })
-}
+export const mongoFindOne = async (
+  col,
+  findCondition,
+  selectCondition = {}
+) => {
+  const result = await col
+    .findOne(findCondition)
+    .select(selectCondition)
+    .lean()
+    .exec();
+  return result;
+};
 
-export const mongoFind = async(col,selectCondition,projectCondition,limit) =>{
-    return new Promise(async(resolve,reject) => { 
-        try{
-            if(!projectCondition) {
-                projectCondition = {};
-            }
-            
-            var limitValue = 0;
-            if(limit) {
-                limitValue = limit;
-            }
-            col.find(selectCondition).select(projectCondition).limit(limitValue).lean().exec(function(err,res){                
-                if(err){                    
-                    reject(new Error(err));
-                }
-                else{
-                    resolve(res);    
-                }        
-            })
-        }catch(err) {
-            reject(new Error(err));;
-        }
-    })
-}
+export const mongoFindOneWithOutLean = async (
+  col,
+  findCondition,
+  selectCondition = {}
+) => {
+  const result = await col
+    .findOne(findCondition)
+    .select(selectCondition)
+    .exec();
+  return result;
+};
 
-export const mongoFindCursor = async(col,selectCondition,projectCondition,sortCondition,limit) =>{
-    return new Promise(async(resolve,reject) => { 
-    	try{
-    		if(!projectCondition) {
-    		    projectCondition = {};
-    		}
-    		if(!sortCondition) {
-    		    sortCondition = {
-    		        "_id":1
-    		    };            
-    		}
-    		var limitValue = 0;
-    		if(limit) {
-    		    limitValue = limit;
-    		}
-    		var cursor = col.find(selectCondition).select(projectCondition).sort(sortCondition).limit(limitValue).lean().cursor();
-    		resolve(cursor);
-    	}catch(err) {
-    		reject(new Error(err));
-    	}
-    })
-}
+export const mongoFindWithSort = async (
+  col,
+  findCondition,
+  selectCondition = {},
+  limit = 0,
+  sortCondition = { _id: -1 }
+) => {
+  const result = await col
+    .find(findCondition)
+    .select(selectCondition)
+    .sort(sortCondition)
+    .limit(limit)
+    .lean()
+    .exec();
+  return result;
+};
 
-export const mongoFindOne = async(col,selectCondition,projectCondition) => {
-    return new Promise(async(resolve,reject) => {
-    	try {
-            if(!projectCondition) {
-                projectCondition = {};
-            }
-			col.findOne(selectCondition).select(projectCondition).lean().exec(function(err,res){
-                if(err){                    
-                    reject(new Error(err));
-                }
-                else{
-                    resolve(res);    
-                }
-			})    		
-    	} catch(err) {
-    		reject(new Error(err));;
-    	}
-    })
-}
+export const mongoFindMany = async (
+  col,
+  findCondition,
+  selectCondition = {},
+  limit = 0
+) => {
+  const result = await col
+    .find(findCondition)
+    .select(selectCondition)
+    .limit(limit)
+    .lean()
+    .exec();
+  return result;
+};
 
-export const mongoCount = async(col,selectCondition) => {
-    return new Promise(async(resolve,reject) => {
-    	try {
-    		col.count(selectCondition,function(err,res){
-    		    if(err){                    
-                    reject(new Error(err));
-                }
-                else{
-                    resolve(res);    
-                }        
-    		})
-    	}catch(err){
-    		reject(new Error(err));;
-    	}
-    })
-}
+export const mongoFindCursor = async (
+  col,
+  findCondition,
+  selectCondition = {},
+  limit = 0
+) => {
+  const cursor = await col
+    .find(findCondition)
+    .select(selectCondition)
+    .limit(limit)
+    .lean()
+    .cursor();
+  return cursor;
+};
 
-export const mongoUpdateOne = async(col,selectCondition,updateCondition) =>{
-	return new Promise(async(resolve,reject) => {
-		try {
-            col.update(selectCondition,updateCondition,function(err,res){
-			    if(err){
-			        reject(new Error(err));
-			    } else {
-			        resolve();
-			    }
-			})
-		}catch(err) {
-			//throw err;
-			reject(new Error(err));;
-		}
-	})
-}
+export const mongoCount = async (col, findCondition) => {
+  const count = await col.count(findCondition);
+  return count;
+};
 
-export const mongoUpsertOne = async(col,selectCondition,updateCondition) =>{
-    return new Promise(async(resolve,reject) => {
-        try {
-            col.update(selectCondition,updateCondition,{upsert:true},function(err,res){
-                if(err){
-                    reject(new Error(err));
-                } else {
-                    resolve();
-                }
-            })
-        }catch(err) {
-            //throw err;
-            reject(new Error(err));;
-        }
-    })
-}
+export const mongoUpdateOne = async (col, findCondition, updateCondition) => {
+  await col.updateOne(findCondition, updateCondition);
+};
 
+export const mongoUpsertOne = async (col, findCondition, updateCondition) => {
+  await col.updateOne(findCondition, updateCondition, { upsert: true });
+};
 
-export const mongoUpdate = async(col,selectCondition,updateCondition) =>{
-    return new Promise(async(resolve,reject) => {
-        try {
-            col.update(selectCondition,updateCondition,{multi:true},function(err,res){
-                if(err){
-                    reject(new Error(err));
-                } else {
-                    resolve();
-                }
-            })
-        }catch(err) {
-            reject(new Error(err));;
-        }
-    })
-}
+export const mongoUpdateMany = async (col, findCondition, updateCondition) => {
+  await col.updateOne(findCondition, updateCondition, { multi: true });
+};
 
-export const mongoAggregate = async(col,aggregateCondition) => {
-	return new Promise(async(resolve,reject) => {
-		try {
-			col.aggregate(aggregateCondition,function(err,res){
-                if(err){
-                    reject(new Error(err));
-                } else {
-			        resolve(res)
-			    }
-			})
-		}catch(err) {
-			reject(new Error(err));;
-		}
-	})
-}
+export const mongoAggregate = async (col, aggregateCondition) => {
+  const result = col.aggregate(aggregateCondition);
+  return result;
+};
 
-export const mongoDelete = async(col,selectCondition) => {
-	return new Promise(async(resolve,reject) => {
-		try {
-			col.remove(selectCondition,function(err,res){
-			    if(err){
-			        reject(new Error(err));
-			    } else {
-			        resolve();
-			    }
-			})			
-		}catch(err) {
-			reject(new Error(err));;
-		}
-	})	
-}
+export const mongoDeleteOne = async (col, findCondition) => {
+  await col.DeleteOne(findCondition);
+};
 
-export const mongoInsert = async(col,doc) =>{
-    return new Promise(async(resolve,reject) =>{
-    	try {
-    		var moongooseModel = col(doc);
-    		moongooseModel.save(function(err, res){
-    		    if(err){
-    		        console.log('insertDoc Error', err); 
-    		        reject(new Error(err));
-    		    } else {
-    		        console.log('mongo insert succ');
-    		        resolve();
-    		    }
-    		})          
-    	} catch(err) {
-    		reject(new Error(err));;
-    	}
-    })
-}
+export const mongoDeleteMany = async (col, findCondition) => {
+  await col.DeleteMany(findCondition);
+};
 
-export const mongoDistinct = async(col,string,selectCondition) => {
-	return new Promise(async(resolve,reject) =>{
-		try {
-			if(!selectCondition) {
-				selectCondition = {};
-			}
-			col.distinct(string,selectCondition,function(err,res){
-				if(err) {
-					reject(new Error(err));;
-				} else {
-					resolve(res);
-				}
-			})
-		}catch(err) {
-			reject(new Error(err));;
-		}
-	})
-}
+export const mongoInsertOne = async (col, doc) => {
+  const moongooseDoc = col(doc);
+  await moongooseDoc.save();
+};
 
-export const mongoFindOneAndUpdate = async(col,selectCondition,updateCondition,returnCondition) =>{
-	return new Promise(async(resolve,reject) => {
-		try {
-			col.findOneAndUpdate(selectCondition,updateCondition,returnCondition,function(err,res){
-			    if(err){
-			        reject(new Error(err));;
-			    } else {
+export const mongoInsertMany = async (col, docs) => {
+  await col.insertMany(docs);
+};
 
-			        resolve(res);
-			    }
-			})
-		}catch(err) {
-			reject(new Error(err));;
-		}
-	})
-}
+export const mongoDistinct = async (col, string, findCondition) => {
+  const result = await col.distinct(string, findCondition);
+  return result;
+};
 
+export const mongoFindOneAndUpdate = async (
+  col,
+  findCondition,
+  updateCondition,
+  returnCondition
+) => {
+  const result = await col.findOneAndUpdate(
+    findCondition,
+    updateCondition,
+    returnCondition
+  );
+  return result;
+};
 
-
-export const mongoFindOneAndRemove = async(col,selectCondition) =>{
-    return new Promise(async(resolve,reject) => {
-        try {
-            col.findOneAndRemove(selectCondition,function(err,res){
-                if(err){
-                    reject(new Error(err));;
-                } else {
-
-                    resolve(res);
-                }
-            })
-        }catch(err) {
-            reject(new Error(err));;
-        }
-    })
-}
-
+export const mongoFindOneAndRemove = async (col, findCondition) => {
+  const result = await col.findOneAndRemove(findCondition);
+  return result;
+};

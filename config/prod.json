@@ -1,23 +1,23 @@
 {
-    "dbconfig": {
-        "dbname": "main",
-        "host": "localhost",
-        "hostWithPort": "localhost:27017",
-        "is_replica_set": false,
-        "replica_hosts": "localhost:27018,localhost:27019",
-        "replica_name": "rs0",
-        "port": 27017,
-        "dbuser": "",
-        "conn_string": "mongodb://localhost:27017/main"
-    },
-    "analyticsDbConfig": {
-        "dbname": "analytics",
-        "host": "localhost",
-        "is_replica_set": false,
-        "replica_hosts": "localhost:27018,localhost:27019",
-        "replica_name": "rs0",
-        "port": 27017,
-        "dbuser": "",
-        "conn_string": "mongodb://localhost:27017/analytics"
-    }
+  "dbconfig": {
+    "dbname": "main",
+    "host": "localhost",
+    "hostWithPort": "localhost:27017",
+    "isReplicaSet": false,
+    "replicaHosts": "localhost:27018,localhost:27019",
+    "replicaName": "rs0",
+    "port": 27017,
+    "dbuser": "",
+    "connString": "mongodb://localhost:27017/main"
+  },
+  "analyticsDbConfig": {
+    "dbname": "analytics",
+    "host": "localhost",
+    "isReplicaSet": false,
+    "replicaHosts": "localhost:27018,localhost:27019",
+    "replicaName": "rs0",
+    "port": 27017,
+    "dbuser": "",
+    "connString": "mongodb://localhost:27017/analytics"
+  }
 }
