@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon index.js",
     "lint": "eslint '**/*.js' --ignore-pattern node_modules/",
-    "pretty": "prettier --write '**/*.{js,jsx,json}'"
+    "pretty": "prettier --write '**/*.{js,jsx,json}'",
+    "husky": "husky install"
   },
   "husky": {
     "hooks": {
@@ -14,7 +15,7 @@
     }
   },
   "lint-staged": {
-    "*": "prettier --write '**/*.{js,jsx,json,ts}'"
+    "*": "prettier --write '**/*.{js,jsx,json,ts,tsx}'"
   },
   "keywords": [],
   "dependencies": {
