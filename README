@@ -1,12 +1,3 @@
-Posts collection sample doc
-
-{
-"\_id" : ObjectId("5d41755d9d3c86c2b4440394"),
-"post" : "Hi vik",
-"post_id" : "123",
-"createdBy" : "vik"
-}
-
 User collection sample doc
 {
 "\_id" : ObjectId("60acb4988c3ed165b8fc50eb"),
@@ -24,7 +15,15 @@ User collection sample doc
 
 Sample Url for testing
 
-curl 'localhost:28096/v1/posts/post?post_id=123' --header 'api-key: 44f9bfb6-47e0-47bf-b5f7-6771de71ff3f' --header 'Content-Type: application/json'
+curl --location --request POST 'localhost:4000/v1/user/register' \
+--header 'Content-Type: application/json' \
+--header 'api-key: 1234' \
+--data-raw '{
+"mobileNo":"1",
+"password":"2",
+"firstName":"3",
+"lastName":"4"
+}'
 
 Node version: 16
 used VS plugins: eslint
