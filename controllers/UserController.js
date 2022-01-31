@@ -10,7 +10,7 @@ export const register = async (req, res, next) => {
     lastName,
   };
   const clientDetails = {
-    api_key: req.header("api_key"),
+    apiKey: req.header("api-key"),
   };
   const userObj = await UserService.registerUser(userDetails, clientDetails);
   req.session = Auth.createSessionObj(userObj);

@@ -6,20 +6,20 @@ import Users from "../models/Users";
 import Clients from "../models/Clients";
 
 async function getClientIdFromApiKey(apiKey) {
-  const selectCondition = {
+  const findCondition = {
     apiKey,
   };
-  const clientObj = await AbstractModels.mongoFindOne(Clients, selectCondition);
+  const clientObj = await AbstractModels.mongoFindOne(Clients, findCondition);
   const clientId = clientObj._id;
   return clientId;
 }
 
 export const registerUser = async (userDetails, clientDetails) => {
   const { mobileNo, password, firstName, lastName } = userDetails;
-  const selectCondition = {
+  const findCondition = {
     mobileNo,
   };
-  let userObj = await AbstractModels.mongoFindOne(Users, selectCondition);
+  let userObj = await AbstractModels.mongoFindOne(Users, findCondition);
   if (userObj) {
     throw new ErrorUtils.DataAlreadyExists();
   } else {

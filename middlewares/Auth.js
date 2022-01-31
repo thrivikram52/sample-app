@@ -133,7 +133,7 @@ const checkBlockListedUser = async (req) => {
     isBlockedUser: true,
   };
   const projectCondition = {
-    mobileNumber: 1,
+    mobileNo: 1,
     _id: 0,
   };
   const userObj = await AbstractModels.mongoFindOne(
@@ -172,7 +172,10 @@ export const checks = async (req, res, next) => {
     next();
   } else if (routeCategory === "noAPIKeyRoutes") {
     next();
-  } else if (routeCategory === "noSessionRoutes") {
+  } else if (
+    routeCategory === "noSessionRoutes" ||
+    routeCategory === "newSessionRoutes"
+  ) {
     const isValidAPIKey = await checkApiKeyValidity(req);
     if (!isValidAPIKey) {
       const err = ErrorUtils.InvalidAPIKey();
@@ -204,19 +207,10 @@ export const checks = async (req, res, next) => {
         next();
       }
     }
-  } else if (routeCategory === "newSessionRoutes") {
-    // 1.api key check
-    const isValidAPIKey = await checkApiKeyValidity(req);
-    if (!isValidAPIKey) {
-      const err = ErrorUtils.InvalidAPIKey();
-      next(err);
-    } else {
-      next();
-    }
   }
 };
 
-export const getRouteObjInReq = (req) => {
+export const injectRequestId = (req) => {
   const { originalUrl } = req;
   const httpMethod = req.method;
   const routeObj = getRouteObj(originalUrl, httpMethod);

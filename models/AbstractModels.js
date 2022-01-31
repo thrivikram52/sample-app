@@ -93,11 +93,11 @@ export const mongoAggregate = async (col, aggregateCondition) => {
 };
 
 export const mongoDeleteOne = async (col, findCondition) => {
-  await col.DeleteOne(findCondition);
+  await col.deleteOne(findCondition);
 };
 
 export const mongoDeleteMany = async (col, findCondition) => {
-  await col.DeleteMany(findCondition);
+  await col.deleteMany(findCondition);
 };
 
 export const mongoInsertOne = async (col, doc) => {

@@ -21,7 +21,7 @@ const auditLogRequest = (req) => {
 };
 
 const reqLog = (req, res, next) => {
-  const routeObj = Auth.getRouteObjInReq(req);
+  const routeObj = Auth.injectRequestId(req);
   req.routeObj = routeObj;
   if (routeObj.routeCategory !== "healthCheckRoutes") {
     auditLogRequest(req);
